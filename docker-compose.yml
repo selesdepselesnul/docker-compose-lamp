@@ -10,7 +10,7 @@ services:
       - "${HOST_MACHINE_UNSECURE_HOST_PORT}:80"
       - "${HOST_MACHINE_SECURE_HOST_PORT}:443"
     links:
-      - database
+      - mysql
     volumes:
       - ${DOCUMENT_ROOT-./www}:/var/www/html:rw
       - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
@@ -29,17 +29,14 @@ services:
       XDEBUG_CONFIG: "client_host=host.docker.internal remote_port=${XDEBUG_PORT}"
     extra_hosts:
       - "host.docker.internal:host-gateway"
-  database:
-    build:
-      context: "./bin/${DATABASE}"
+  mysql:
+    image: mysql:8.0.37-debian
     container_name: "${COMPOSE_PROJECT_NAME}-${DATABASE}"
     restart: "always"
     ports:
       - "127.0.0.1:${HOST_MACHINE_MYSQL_PORT}:3306"
     volumes:
-      - ${MYSQL_INITDB_DIR-./config/initdb}:/docker-entrypoint-initdb.d
-      - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
-      - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+      - linguise-mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -49,7 +46,7 @@ services:
     image: phpmyadmin
     container_name: "${COMPOSE_PROJECT_NAME}-phpmyadmin"
     links:
-      - database
+      - mysql
     environment:
       PMA_HOST: database
       PMA_PORT: 3306
@@ -68,6 +65,12 @@ services:
       - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
   redis:
     container_name: "${COMPOSE_PROJECT_NAME}-redis"
-    image: redis:latest
+    image: redis:7.0.15-alpine3.20
     ports:
       - "127.0.0.1:${HOST_MACHINE_REDIS_PORT}:6379"
+  memcached:
+    container_name: "${COMPOSE_PROJECT_NAME}-memcached"
+    image: memcached:1.6.28-alpine3.20
+
+volumes:
+  linguise-mysql-data:
