@@ -1,33 +1,30 @@
 version: "3"
 
 services:
-  # webserver:
-  #   build:
-  #     context: ./bin/${PHPVERSION}
-  #   container_name: "${COMPOSE_PROJECT_NAME}-${PHPVERSION}"
-  #   restart: "always"
-  #   ports:
-  #     - "80:80"
-  #   links:
-  #     - mysql
-  #   volumes:
-  #     - ${DOCUMENT_ROOT-./www}:/var/www/html:rw
-  #     - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
-  #     - ${SSL_DIR-./config/ssl}:/etc/apache2/ssl/
-  #     - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
-  #     - ${LOG_DIR-./logs/apache2}:/var/log/apache2
-  #     - ${XDEBUG_LOG_DIR-./logs/xdebug}:/var/log/xdebug
-  #   environment:
-  #     APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/html}
-  #     PMA_PORT: ${HOST_MACHINE_PMA_PORT}
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #     MYSQL_USER: ${MYSQL_USER}
-  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
-  #     HOST_MACHINE_MYSQL_PORT: ${HOST_MACHINE_MYSQL_PORT}
-  #     # XDEBUG_CONFIG: "client_host=host.docker.internal remote_port=${XDEBUG_PORT}"
-  #   networks:
-  #     - host
+  webserver:
+    build:
+      context: ./bin/${PHPVERSION}
+    container_name: "${COMPOSE_PROJECT_NAME}-${PHPVERSION}"
+    restart: "always"
+    ports:
+      - "80:80"
+    volumes:
+      - ${DOCUMENT_ROOT-./www}:/var/www/html:rw
+      - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
+      - ${SSL_DIR-./config/ssl}:/etc/apache2/ssl/
+      - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
+      - ${LOG_DIR-./logs/apache2}:/var/log/apache2
+      - ${XDEBUG_LOG_DIR-./logs/xdebug}:/var/log/xdebug
+    environment:
+      APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/html}
+      PMA_PORT: ${HOST_MACHINE_PMA_PORT}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      HOST_MACHINE_MYSQL_PORT: ${HOST_MACHINE_MYSQL_PORT}
+    network_mode: "host"        
+
   mysql:
     image: mysql:8.0.37-debian
     container_name: "${COMPOSE_PROJECT_NAME}-${DATABASE}"
@@ -54,8 +51,3 @@ services:
 
 volumes:
   linguise-mysql-data:
-
-networks:
-  host:
-    name: host
-    external: true
