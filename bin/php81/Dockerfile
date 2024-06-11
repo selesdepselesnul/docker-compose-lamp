@@ -48,7 +48,7 @@ RUN pecl install redis-5.3.3 && \
 RUN apt-get update && \
     apt-get -y --no-install-recommends install --fix-missing libmagickwand-dev && \
     rm -rf /var/lib/apt/lists/*
-
+RUN mkdir /root/.ssh
 # Workarround until imagick is available in pecl with php8 support
 # Imagick Commit to install
 # https://github.com/Imagick/imagick
