@@ -9,13 +9,14 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ~/linguise/linguise-meta/CMS-WordPress:/var/www/html:rw
-      - ~/.ssh:/root/.ssh:rw
+      - ${DOCUMENT_ROOT-./www}:/var/www/html:rw
       - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
       - ${SSL_DIR-./config/ssl}:/etc/apache2/ssl/
       - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
       - ${LOG_DIR-./logs/apache2}:/var/log/apache2
       - ${XDEBUG_LOG_DIR-./logs/xdebug}:/var/log/xdebug
+      - /home/morrisseymarr/linguise/linguise-meta/CMS-WordPress:/var/www/html/wp-content/plugins/linguise
+      - ~/.ssh:/root/.ssh
     environment:
       APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/html}
       PMA_PORT: ${HOST_MACHINE_PMA_PORT}
