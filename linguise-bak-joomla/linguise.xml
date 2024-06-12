@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="system" method="upgrade">
+	<name>linguise</name>
+	<author>Linguise</author>
+	<creationDate>2021-12-14</creationDate>
+	<copyright>Linguise</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<authorEmail>contact@linguise.com</authorEmail>
+	<authorUrl>www.linguise.com</authorUrl>
+	<version>2.0.4</version>
+	<description>Linguise automatic translation</description>
+	<files>
+		<filename plugin="linguise">linguise.php</filename>
+		<filename>index.html</filename>
+		<filename>script.php</filename>
+		<filename>Configuration.php</filename>
+		<folder>language</folder>
+		<folder>vendor</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_linguise.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_linguise.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+						name="linguise_field_token"
+						label="PLG_LINGUISE_TOKEN_LABEL"
+						description="PLG_LINGUISE_TOKEN_DESCRIPTION"
+						type="text"
+						default=""
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

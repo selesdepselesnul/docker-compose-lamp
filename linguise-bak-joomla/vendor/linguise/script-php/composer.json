@@ -1,0 +1,32 @@
+{
+  "name": "linguise/script-php",
+  "description": "Linguise Script Php",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Linguise",
+      "email": "dev@linguise.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Linguise\\Script\\Core\\": "src/"
+    }
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "platform-check": false
+  },
+  "require": {
+    "php": "^7.0.7",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-zip": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  }
+}

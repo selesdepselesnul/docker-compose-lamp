@@ -16,7 +16,7 @@ services:
       - ${LOG_DIR-./logs/apache2}:/var/log/apache2
       - ${XDEBUG_LOG_DIR-./logs/xdebug}:/var/log/xdebug
       # - /home/morrisseymarr/linguise/linguise-meta/CMS-WordPress:/var/www/html/wp-content/plugins/linguise
-      - /home/morrisseymarr/linguise/linguise-meta/CMS-Joomla:/var/www/html/plugins/system/linguise
+      - /home/morrisseymarr/linguise/linguise-meta/CMS-Joomla/packages:/var/www/html/plugins/system/linguise
       - ~/.ssh:/root/.ssh
     environment:
       APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/html}
